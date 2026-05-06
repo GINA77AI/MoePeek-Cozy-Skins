@@ -18,10 +18,11 @@ jobs:
           brew update
           brew install tuist
 
-      - name: Generate Project with Tuist
+      - name: Install Dependencies & Generate Project
         working-directory: moepeek-src
         run: |
           export PATH="$HOME/.tuistenv/bin:$PATH"
+          tuist install
           tuist generate
 
       - name: Find Workspace or Project
