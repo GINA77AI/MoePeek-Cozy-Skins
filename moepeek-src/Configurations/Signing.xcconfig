@@ -1,0 +1,6 @@
+// Code Signing Configuration for CI Build (no signing)
+MOEPEEK_CODE_SIGN_STYLE = Manual
+MOEPEEK_CODE_SIGN_IDENTITY = -
+MOEPEEK_DEVELOPMENT_TEAM =
+// Sparkle EdDSA public key for auto-update verification (optional)
+SPARKLE_ED_PUBLIC_KEY =
