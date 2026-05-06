@@ -13,95 +13,50 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Dependencies via Homebrew
-        run: |
-          brew update
-          brew install tuist
+      - name: Install Tuist via Homebrew
+        run: brew install tuist
 
-      - name: Install Dependencies & Generate Project
+      - name: Install Deps & Generate
         working-directory: moepeek-src
         run: |
           export PATH="$HOME/.tuistenv/bin:$PATH"
-          tuist install
-          tuist generate
+          tuist install && tuist generate
 
-      - name: Find Workspace or Project
-        id: find-project
-        working-directory: moepeek-src
-        run: |
-          if [ -f "MoePeek.xcworkspace/contents.xcworkspacedata" ]; then
-            echo "workspace=MoePeek.xcworkspace" >> $GITHUB_OUTPUT
-            echo "build_cmd=-workspace MoePeek.xcworkspace" >> $GITHUB_OUTPUT
-          elif [ -d "MoePeek.xcodeproj" ]; then
-            echo "project=MoePeek.xcodeproj" >> $GITHUB_OUTPUT
-            echo "build_cmd=-project MoePeek.xcodeproj" >> $GITHUB_OUTPUT
-          else
-            echo "ERROR: No workspace or project found!"
-            ls -la *.xcworkspace *.xcodeproj 2>/dev/null || true
-            exit 1
-          fi
-
-      - name: Build App (Release)
+      - name: Build
         working-directory: moepeek-src
         run: |
           export PATH="$HOME/.tuistenv/bin:$PATH"
-          xcodebuild ${{ steps.find-project.outputs.build_cmd }} \
+          xcodebuild \
+            -workspace MoePeek.xcworkspace \
             -scheme MoePeek \
             -configuration Release \
             -derivedDataPath build \
-            CODE_SIGN_IDENTITY="-" \
             CODE_SIGNING_ALLOWED=NO \
-            ENABLE_BITCODE=NO \
             | xcpretty || true
 
-          # Check build output
-          echo "=== Looking for built .app ==="
-          find build -name "*.app" -type d 2>/dev/null | head -5
-
-      - name: Package .app into zip
+      - name: Package & Upload
         run: |
-          APP_PATH=$(find moepeek-src/build -name "MoePeek.app" -type d 2>/dev/null | head -1)
-          
-          if [ -z "$APP_PATH" ]; then
-            echo "Searching broader..."
-            APP_PATH=$(find moepeek-src/build -name "*.app" -type d 2>/dev/null | grep -i moe | head -1)
+          # Find the built app
+          APP=$(find moepeek-src/build -name "MoePeek.app" -type d | head -1)
+          echo "Found: $APP"
+          if [ -z "$APP" ]; then
+            echo "::error::MoePeek.app not found"
+            exit 1
           fi
-          
-          if [ -z "$APP_PATH" ] || [ ! -d "$APP_PATH" ]; then
-            echo "ERROR: MoePeek.app not found after build!"
-            echo "Contents of build directory:"
-            find moepeek-src/build -maxdepth 4 -type f -name "*.app" -o -name "MoePeek" 2>/dev/null | head -10
-            # Try looking in DerivedData
-            APP_PATH=$(find moepeek-src/build/DerivedData -name "MoePeek.app" -type d 2>/dev/null | head -1)
-          fi
-          
-          if [ -n "$APP_PATH" ] && [ -d "$APP_PATH" ]; then
-            echo "Found app at: $APP_PATH"
-            cd "$(dirname "$APP_PATH")"
-            zip -r -q "${GITHUB_WORKSPACE}/MoePeek-Cozy-Skins.zip" "$(basename "$APP_PATH")"
-            echo "✅ Packaged: $(du -h ${GITHUB_WORKSPACE}/MoePeek-Cozy-Skins.zip | cut -f1)"
-          else
-            echo "⚠️ Could not find MoePeek.app, creating debug package instead"
-            # Create a fallback with source code for manual build
-            cd moepeek-src
-            zip -r -q "${GITHUB_WORKSPACE}/MoePeek-Cozy-Skins-Source.zip Sources/ Package.swift Project.swift Tuist/
-            mv "${GITHUB_WORKSPACE}/MoePeek-Cozy-Skins-Source.zip" "${GITHUB_WORKSPACE}/MoePeek-Cozy-Skins.zip"
-            echo "⚠️ Packaged source as fallback"
-          fi
+          # Create zip at workspace root
+          ditto -ck --keepParent "$APP" MoePeek-Cozy-Skins.zip
+          ls -lh MoePeek-Cozy-Skins.zip
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: MoePeek-Cozy-Skins
           path: MoePeek-Cozy-Skins.zip
-          retention-days: 30
-          if-no-files-found: warn
+          retention-days: 90
 
-      - name: Create GitHub Release
+      - name: Release
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
-          files: moepeek-src/MoePeek-Cozy-Skins.zip
-          generate_release_notes: true
+          files: MoePeek-Cozy-Skins.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
