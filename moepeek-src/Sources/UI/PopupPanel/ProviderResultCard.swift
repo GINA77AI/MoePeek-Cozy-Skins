@@ -1,0 +1,187 @@
+import Defaults
+import SwiftUI
+
+/// A collapsible card showing a single provider's translation result.
+struct ProviderResultCard: View {
+    let provider: any TranslationProvider
+    let state: TranslationCoordinator.ProviderState
+    let targetLanguage: String
+    @Binding var isExpanded: Bool
+    var onRetry: (() -> Void)?
+    @Default(.popupFontSize) private var fontSize
+    @Default(.popupFontName) private var fontName
+    @Default(.ttsAccent) private var ttsAccent
+    @Environment(\.ttsCoordinator) private var ttsCoordinator
+
+    /// Shorthand to avoid repeated lookups.
+    private var t: Theme { ThemeManager.shared.current }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            // Header — always visible
+            Button {
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    isExpanded.toggle()
+                }
+            } label: {
+                HStack(spacing: 6) {
+                    Image(systemName: isExpanded ? "chevron.down" : "chevron.right")
+                        .font(.system(size: CGFloat(fontSize - 4)))
+                        .foregroundStyle(t.chevronColor)
+                        .frame(width: 10)
+
+                    ProviderIconView(provider: provider, font: .system(size: CGFloat(fontSize - 2)), size: CGFloat(fontSize + 2))
+                        .foregroundStyle(t.providerIconColor)
+
+                    Text(provider.displayName)
+                        .font(.popup(name: fontName, size: CGFloat(fontSize - 2)))
+                        .fontWeight(.medium)
+                        .foregroundStyle(t.providerNameColor)
+
+                    Spacer()
+
+                    statusIndicator
+                }
+                .padding(.horizontal, 8)
+                .padding(.vertical, 6)
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .background { InteractiveMarker() }
+
+            // Body — visible when expanded
+            if isExpanded {
+                Divider()
+                    .padding(.horizontal, 8)
+
+                bodyContent
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 6)
+            }
+        }
+        .background(t.cardBackgroundColor)
+        .clipShape(RoundedRectangle(cornerRadius: t.cardCornerRadius))
+        .overlay(
+            RoundedRectangle(cornerRadius: t.cardCornerRadius)
+                .stroke(t.cardBorderColor.opacity(t.cardBorderOpacity), lineWidth: t.cardBorderWidth)
+        )
+    }
+
+    private func isSpeaking(_ text: String) -> Bool {
+        ttsCoordinator?.isPlaying(text) ?? false
+    }
+
+    // MARK: - Status Indicator
+
+    @ViewBuilder
+    private var statusIndicator: some View {
+        switch state {
+        case .waiting:
+            Circle()
+                .fill(t.waitingDotColor)
+                .frame(width: 6, height: 6)
+        case .translating:
+            ProgressView()
+                .controlSize(.mini)
+        case .streaming:
+            ProgressView()
+                .controlSize(.mini)
+        case .completed:
+            Image(systemName: "checkmark.circle.fill")
+                .font(.system(size: CGFloat(fontSize - 2)))
+                .foregroundStyle(t.successColor)
+        case .error:
+            Image(systemName: "exclamationmark.triangle.fill")
+                .font(.system(size: CGFloat(fontSize - 2)))
+                .foregroundStyle(.red)
+        }
+    }
+
+    // MARK: - Body Content
+
+    @ViewBuilder
+    private var bodyContent: some View {
+        switch state {
+        case .waiting:
+            Text("Waiting…")
+                .font(.popup(name: fontName, size: CGFloat(fontSize)))
+                .foregroundStyle(t.hintTextColor)
+        case .translating:
+            Text("Translating…")
+                .font(.popup(name: fontName, size: CGFloat(fontSize)))
+                .foregroundStyle(t.translatingColor)
+        case let .streaming(partial):
+            VStack(alignment: .leading, spacing: 4) {
+                Text(partial)
+                    .font(.popup(name: fontName, size: CGFloat(fontSize)))
+                    .foregroundStyle(t.translationTextSecondary)
+                    .textSelection(.enabled)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .background { InteractiveMarker() }
+        case let .completed(text):
+            VStack(alignment: .leading, spacing: 4) {
+                Text(text)
+                    .font(.popup(name: fontName, size: CGFloat(fontSize)))
+                    .foregroundStyle(t.translationTextPrimary)
+                    .textSelection(.enabled)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                HStack {
+                    Spacer()
+
+                    if let ttsCoordinator {
+                        Button {
+                            if isSpeaking(text) {
+                                ttsCoordinator.stop()
+                            } else {
+                                ttsCoordinator.speak(text, language: targetLanguage)
+                            }
+                        } label: {
+                            HStack(spacing: 2) {
+                                Image(systemName: isSpeaking(text) ? "speaker.wave.3.fill" : "speaker.wave.2")
+                                if targetLanguage.hasPrefix("en") {
+                                    Text(ttsAccent.shortLabel)
+                                }
+                            }
+                            .font(.popup(name: fontName, size: CGFloat(fontSize - 2)))
+                        }
+                        .buttonStyle(.bordered)
+                        .controlSize(.mini)
+                        .help("Speak")
+                    }
+
+                    Button {
+                        NSPasteboard.general.clearContents()
+                        NSPasteboard.general.setString(text, forType: .string)
+                    } label: {
+                        Label("Copy", systemImage: "doc.on.doc")
+                            .font(.popup(name: fontName, size: CGFloat(fontSize - 2)))
+                    }
+                    .buttonStyle(.bordered)
+                    .controlSize(.mini)
+                }
+            }
+            .background { InteractiveMarker() }
+        case let .error(message):
+            VStack(alignment: .leading, spacing: 4) {
+                Label(message, systemImage: "exclamationmark.triangle")
+                    .font(.popup(name: fontName, size: CGFloat(fontSize)))
+                    .foregroundStyle(.red)
+
+                if let onRetry {
+                    HStack {
+                        Spacer()
+                        Button(action: onRetry) {
+                            Label("Retry", systemImage: "arrow.clockwise")
+                                .font(.popup(name: fontName, size: CGFloat(fontSize - 2)))
+                        }
+                        .buttonStyle(.bordered)
+                        .controlSize(.mini)
+                    }
+                }
+            }
+            .background { InteractiveMarker() }
+        }
+    }
+}

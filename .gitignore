@@ -1,0 +1,23 @@
+# Xcode
+moepeek-src/build/
+moepeek-src/*.xcworkspace/
+moepeek-src/*.xcodeproj/
+moepeek-src/.build/
+moepeek-src/DerivedData/
+moepeek-src/.tuist/
+
+# Swift
+.build/
+*.xcodeproj/xcuserdata/
+
+# macOS
+.DS_Store
+*.swp
+
+# Python
+__pycache__/
+*.py[cod]
+venv/
+
+# Previews (keep in git for GitHub Pages)
+# forest-translate/preview.html is included

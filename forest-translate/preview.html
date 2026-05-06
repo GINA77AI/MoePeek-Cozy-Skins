@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MoePeek Cozy Skins — 🌿🌸🎐☁️</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600&family=Noto+Serif+SC:wght@400;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --page-bg: #f5f3f0;
+    --text-primary: #2d2a26;
+    --text-secondary: #6b6560;
+    --accent-green: #5a8244;
+    --accent-pink: #b03060;
+    --accent-amber: #b07830;
+    --accent-blue: #5860a0;
+  }
+
+  body {
+    font-family: 'Noto Sans SC', -apple-system, sans-serif;
+    background: var(--page-bg);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    text-align: center;
+    padding: 60px 20px 40px;
+    background: linear-gradient(180deg, #fff 0%, var(--page-bg) 100%);
+  }
+  .hero h1 { font-size: 2.6em; margin-bottom: 12px; letter-spacing: -1px; }
+  .hero h1 span { background: linear-gradient(135deg, var(--accent-green), var(--accent-pink), var(--accent-amber), var(--accent-blue));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero p { color: var(--text-secondary); font-size: 1.15em; max-width: 520px; margin: 0 auto; line-height: 1.7; }
+  .hero-tags { display:flex; gap:10px; justify-content:center; margin-top:18px; flex-wrap:wrap; }
+  .hero-tag { padding:5px 14px; border-radius:20px; font-size:.82em; font-weight:500; background:#eae7e1; color:#555; }
+
+  /* ── Theme Tabs ── */
+  .tabs { display:flex; justify-content:center; gap:8px; padding: 20px; flex-wrap:wrap; position:sticky; top:0; z-index:50; background:var(--page-bg); border-bottom:1px solid rgba(0,0,0,.04); backdrop-filter:saturate(180%) blur(12px); -webkit-backdrop-filter:saturate(180%) blur(12px); }
+  .tab-btn { padding:9px 22px; border:none; border-radius:25px; cursor:pointer; font-family:inherit; font-size:.92em; font-weight:500; transition:all .25s cubic-bezier(.34,1.56,.64,1); display:flex; align-items:center; gap:7px; }
+  .tab-btn:hover { transform:translateY(-2px); }
+  .tab-btn.active { color:#fff !important; box-shadow:0 4px 16px rgba(0,0,0,.14); transform:translateY(-2px) scale(1.03); }
+  .tab-default { background:#888; color:#fff; }
+  .tab-default.active { background:#555; }
+  .tab-forest { background:#e8f0dc; color:#4a6838; }
+  .tab-forest.active { background:#5a8244; color:#fff; }
+  .tab-cherry { background:#fce8ef; color:#903058; }
+  .tab-cherry.active { background:#c04078; color:#fff; }
+  .tab-sunset { background:#fef3e4; color:#986028; }
+  .tab-sunset.active { background:#c88530; color:#fff; }
+  .tab-cloud { background:#ececf8; color:#484880; }
+  .tab-cloud.active { background:#6068b0; color:#fff; }
+
+  /* ── Showcase ── */
+  .showcase { padding: 30px 20px 70px; display:flex; flex-direction:column; align-items:center; gap:50px; max-width:1100px; margin:0 auto; }
+  .section-title { font-size:1.35em; font-weight:600; margin-bottom:20px; display:flex; align-items:center; gap:8px; color:var(--text-primary); width:100%; padding-left:8px; }
+
+  /* ── Panel Preview ── */
+  .panel-scene { position:relative; display:flex; align-items:flex-start; gap:24px; align-self:center; }
+  .selected-text {
+    max-width:280px; line-height:1.75; font-size:1em; padding:14px 18px; border-radius:12px;
+    background:#fff; box-shadow:0 2px 12px rgba(0,0,0,.06);
+    animation:textAppear .5s ease-out; position:relative;
+  }
+  @keyframes textAppear{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+  /* ── Theme Panel (the popup) ── */
+  .theme-panel {
+    width:360px; border-radius:0; overflow:hidden; position:relative;
+    animation:panelIn .45s cubic-bezier(.34,1.56,.64,1) forwards;
+    filter: drop-shadow(0 8px 28px rgba(0,0,0,.08)) drop-shadow(0 2px 8px rgba(0,0,0,.04));
+    transition:filter .35s ease;
+  }
+  .theme-panel:hover { filter: drop-shadow(0 12px 36px rgba(0,0,0,.11)) drop-shadow(0 3px 10px rgba(0,0,0,.06)); }
+  @keyframes panelIn{from{opacity:0;transform:scale(.92) translateY(10px);}to{opacity:1;transform:none;}}
+
+  /* ── Trigger Button ── */
+  .trigger-wrapper { position:relative; display:inline-block; margin-left:-12px; margin-top:4px; }
+  .trigger-btn {
+    width:42px; height:42px; border-radius:50%; border:none; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    font-size:19px; transition:all .25s cubic-bezier(.34,1.56,.64,1);
+    animation:btnPop .4s cubic-bezier(.34,1.56,.64,1) forwards;
+  }
+  .trigger-btn:hover { transform:scale(1.13); }
+  .trigger-btn:active { transform:scale(.93); }
+  @keyframes btnPop{from{opacity:0;transform:scale(.3);}to{opacity:1;transform:scale(1);}}
+
+  /* ── Color Palette ── */
+  .palette { display:flex; gap:8px; flex-wrap:wrap; margin-top:24px; justify-content:center; }
+  .swatch {
+    width:44px; height:44px; border-radius:12px; cursor:pointer; position:relative;
+    transition:transform .2s; border:1.5px solid rgba(255,255,255,.7); box-shadow:0 2px 8px rgba(0,0,0,.08);
+  }
+  .swatch:hover { transform:scale(1.15) translateY(-4px); z-index:5; }
+  .swatch::after {
+    content:attr(data-label); position:absolute; bottom:-22px; left:50%; transform:translateX(-50%);
+    font-size:.66em; white-space:nowrap; opacity:0; transition:opacity .2s; color:var(--text-secondary);
+    font-family:'SF Mono',Monaco,monospace;
+  }
+  .swatch:hover::after { opacity:1; }
+
+  /* ── Comparison Grid ── */
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; width:100%; }
+  .mini-card {
+    border-radius:16px; overflow:hidden; cursor:pointer; transition:all .3s ease;
+    box-shadow:0 2px 12px rgba(0,0,0,.06);
+  }
+  .mini-card:hover { transform:translateY(-6px); box-shadow:0 8px 28px rgba(0,0,0,.12); }
+  .mini-header { padding:14px 16px; display:flex; align-items:center; gap:8px; }
+  .mini-header .emoji { font-size:1.4em; }
+  .mini-header .name { font-weight:600; font-size:.95em; }
+  .mini-body { padding:12px 16px 16px; }
+  .mini-panel { border-radius:10px; padding:12px; min-height:120px; position:relative; overflow:hidden; }
+  .mini-line { height:8px; border-radius:4px; margin-bottom:8px; }
+  .mini-line.short { width:70%; }
+  .mini-line.medium { width:85%; }
+  .mini-line.long { width:95%; }
+
+  /* ── Architecture Section ── */
+  .arch-section { width:100%; background:#fff; border-radius:20px; padding:32px; box-shadow:0 2px 16px rgba(0,0,0,.04); }
+  .arch-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; margin-top:20px; }
+  .arch-item { background:#fafaf8; border-radius:12px; padding:18px; border-left:3.5px solid; }
+  .arch-item h4 { font-size:.9em; margin-bottom:6px; display:flex; align-items:center; gap:6px; }
+  .arch-item p { font-size:.82em; color:var(--text-secondary); line-height:1.6; }
+  .file-tree { font-family:'SF Mono',Monaco,'Courier New',monospace; font-size:.8em; background:#2d2a26; color:#c8c4bc; border-radius:10px; padding:20px; margin-top:20px; line-height:1.8; overflow-x:auto; }
+  .file-tree .comment { color:#6b8560; }
+  .file-tree .dir { color:#7eb0a0; }
+  .file-tree .file { color:#d4c8a0; }
+  .file-tree .key { color:#c89078; }
+
+  /* ── Footer / CTA ── */
+  .cta-section { text-align:center; padding:50px 20px 60px; }
+  .cta-section h2 { font-size:1.6em; margin-bottom:12px; }
+  .cta-section p { color:var(--text-secondary); margin-bottom:24px; max-width:480px; margin-left:auto; margin-right:auto; line-height:1.7; }
+  .cta-btns { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+  .cta-btn {
+    display:inline-flex; align-items:center; gap:8px; padding:12px 28px; border-radius:30px;
+    text-decoration:none; color:#fff; font-weight:600; font-size:.95em;
+    transition:all .25s cubic-bezier(.34,1.56,.64,1);
+    box-shadow:0 4px 14px rgba(0,0,0,.1);
+  }
+  .cta-btn:hover { transform:translateY(-3px); box-shadow:0 8px 24px rgba(0,0,0,.15); }
+  .cta-primary { background:linear-gradient(135deg,#5a8244,#4a7234); }
+  .cta-secondary { background:#555; }
+
+  /* ════════════ THEME-SPECIFIC OVERRIDES ════════════ */
+
+  /* ── Default ── */
+  .theme-default .mini-panel,
+  .theme-default .theme-panel { background: #f0f0f0; border-radius:12px; }
+  .theme-default .panel-inner { background:#f0f0f0; border-radius:12px; }
+  .theme-default .input-area { background:rgba(0,0,0,.03); border-radius:6px; }
+  .theme-default .card { background:rgba(0,0,0,.03); border-radius:6px; border:.5px solid rgba(0,0,0,.06); }
+  .theme-default .card-text { color:#222; }
+  .theme-default .provider-name { color:#333; }
+  .theme-default .status-dot { background:#999; }
+  .theme-default .success-icon { color:#28a745; }
+  .theme-default .lang-bar { background:transparent; }
+  .theme-default .hint { color:#999; }
+  .theme-default .divider-line { border-color:rgba(0,0,0,.12); }
+  .theme-default .tts-btn { color:#666; }
+  .theme-default .swap-btn { color:#666; }
+  .theme-default .trigger-btn { background:#e8e8e8; border:1.5px solid #ccc; box-shadow:0 1px 4px rgba(0,0,0,.08); }
+  .theme-default .trigger-btn span { color:#333; }
+
+  /* ── Forest Breath ── */
+  .theme-forest .mini-panel,
+  .theme-forest .theme-panel { background: linear-gradient(180deg, rgba(255,255,255,.30), rgba(225,240,220,.20), transparent), #f2f7ed; border-radius:16px; }
+  .theme-forest .panel-inner { background: linear-gradient(180deg, rgba(255,255,255,.30), rgba(225,240,220,.20), transparent), #f2f7ed; border-radius:16px; }
+  .theme-forest .input-area { background:rgba(230,245,220,.55); border-radius:10px; }
+  .theme-forest .card { background:rgba(218,235,210,.45); border-radius:10px; border:.5px solid rgba(185,215,173,.20); }
+  .theme-forest .card-text { color:#33472e; }
+  .theme-forest .provider-name { color:#66855c; }
+  .theme-forest .status-dot { background:#c0d2b5; }
+  .theme-forest .success-icon { color:#73a666; }
+  .theme-forest .lang-bar { background:rgba(218,235,210,.45); border-radius:8px; }
+  .theme-forest .hint { color:#b3c7ad; }
+  .theme-forest .divider-line { border-color:rgba(160,190,148,.12); }
+  .theme-forest .tts-btn { color:#739e6b; }
+  .theme-forest .swap-btn { color:#739e6b; }
+  .theme-forest .trigger-btn { background:#f2f7ec; border:1.5px solid rgba(165,204,148,.35); box-shadow:0 1px 6px rgba(89,130,78,.25); }
+  .theme-forest .trigger-btn span { color:#597a52; }
+
+  /* ── Cherry Blossom ── */
+  .theme-cherry .mini-panel,
+  .theme-cherry .theme-panel { background: linear-gradient(180deg, rgba(255,255,255,.35), rgba(245,228,236,.18), transparent), #faf2f6; border-radius:20px; }
+  .theme-cherry .panel-inner { background: linear-gradient(180deg, rgba(255,255,255,.35), rgba(245,228,236,.18), transparent), #faf2f6; border-radius:20px; }
+  .theme-cherry .input-area { background:rgba(250,236,243,.52); border-radius:12px; }
+  .theme-cherry .card { background:rgba(248,228,238,.50); border-radius:12px; border:.5px solid rgba(224,184,204,.22); }
+  .theme-cherry .card-text { color:#472e3d; }
+  .theme-cherry .provider-name { color:#946680; }
+  .theme-cherry .status-dot { color:#dcccd4; }
+  .theme-cherry .success-icon { color:#cc7aa3; }
+  .theme-cherry .lang-bar { background:rgba(248,228,238,.48); border-radius:8px; }
+  .theme-cherry .hint { color:#c2adb6; }
+  .theme-cherry .divider-line { border-color:rgba(212,176,196,.13); }
+  .theme-cherry .tts-btn { color:#b3809e; }
+  .theme-cherry .swap-btn { color:#b3809e; }
+  .theme-cherry .trigger-btn { background:#f8f0f6; border:1.5px solid rgba(212,174,196,.38); box-shadow:0 1px 7px rgba(217,105,199,.22); }
+  .theme-cherry .trigger-btn span { color:#8a577a; }
+
+  /* ── Sunset Warmth ── */
+  .theme-sunset .mini-panel,
+  .theme-sunset .theme-panel { background: linear-gradient(180deg, rgba(255,255,255,.30), rgba(245,230,209,.18), rgba(240,222,200,.10)), #faf2e6; border-radius:14px; }
+  .theme-sunset .panel-inner { background: linear-gradient(180deg, rgba(255,255,255,.30), rgba(245,230,209,.18), rgba(240,222,200,.10)), #faf2e6; border-radius:14px; }
+  .theme-sunset .input-area { background:rgba(250,244,234,.52); border-radius:10px; }
+  .theme-sunset .card { background:rgba(248,240,228,.48); border-radius:10px; border:.5px solid rgba(214,189,148,.20); }
+  .theme-sunset .card-text { color:#423326; }
+  .theme-sunset .provider-name { color:#8f704d; }
+  .theme-sunset .status-dot { color:#d7c7b3; }
+  .theme-sunset .success-icon { color:#bf9452; }
+  .theme-sunset .lang-bar { background:rgba(248,236,222,.48); border-radius:8px; }
+  .theme-sunset .hint { color:#bda991; }
+  .theme-sunset .divider-line { border-color:rgba(212,192,164,.13); }
+  .theme-sunset .tts-btn { color:#a88057; }
+  .theme-sunset .swap-btn { color:#a88057; }
+  .theme-sunset .trigger-btn { background:#f8f0e6; border:1.5px solid rgba(204,173,128,.34); box-shadow:0 1px 6px rgba(210,169,102,.23); }
+  .theme-sunset .trigger-btn span { color:#80613d; }
+
+  /* ── Cloud Soft ── */
+  .theme-cloud .mini-panel,
+  .theme-cloud .theme-panel { background: linear-gradient(180deg, rgba(255,255,255,.40), rgba(235,235,250,.18), rgba(227,227,247,.08)), #f5f5fa; border-radius:24px; }
+  .theme-cloud .panel-inner { background: linear-gradient(180deg, rgba(255,255,255,.40), rgba(235,235,250,.18), rgba(227,227,247,.08)), #f5f5fa; border-radius:24px; }
+  .theme-cloud .input-area { background:rgba(244,244,252,.52); border-radius:14px; }
+  .theme-cloud .card { background:rgba(242,242,250,.48); border-radius:14px; border:.5px solid rgba(193,193,230,.22); }
+  .theme-cloud .card-text { color:#383852; }
+  .theme-cloud .provider-name { color:#7a7a9e; }
+  .theme-cloud .status-dot { color:#d1d1e6; }
+  .theme-cloud .success-icon { color:#8085cc; }
+  .theme-cloud .lang-bar { background:rgba(242,242,250,.48); border-radius:8px; }
+  .theme-cloud .hint { color:#b8b8cc; }
+  .theme-cloud .divider-line { border-color:rgba(195,195,232,.12); }
+  .theme-cloud .tts-btn { color:#858acc; }
+  .theme-cloud .swap-btn { color:#858acc; }
+  .theme-cloud .trigger-btn { background:#f5f5fa; border:1.5px solid rgba(183,183,224,.38); box-shadow:0 1px 8px rgba(166,166,224,.24); }
+  .theme-cloud .trigger-btn span { color:#616199; }
+</style>
+</head>
+<body>
+
+<!-- ═══ Hero ═══ -->
+<div class="hero">
+  <h1>MoePeek <span>Cozy Skins</span></h1>
+  <p>A warm, cozy theming layer for MoePeek — the lightweight macOS translation tool.<br>Fork of <a href="https://github.com/cosZone/MoePeek" style="color:var(--accent-green)">cosZone/MoePeek</a></p>
+  <div class="hero-tags">
+    <span class="hero-tag">🌿 Forest</span>
+    <span class="hero-tag">🌸 Cherry Blossom</span>
+    <span class="hero-tag">🎐 Sunset</span>
+    <span class="hero-tag">☁️ Cloud</span>
+    <span class="hero-tag">Swift 6</span>
+    <span class="hero-tag">macOS 15+</span>
+  </div>
+</div>
+
+<!-- ═══ Theme Tabs ═══ -->
+<div class="tabs" id="tabBar">
+  <button class="tab-btn tab-default active" data-theme="default" onclick="switchTheme('default')">📦 Default</button>
+  <button class="tab-btn tab-forest" data-theme="forest" onclick="switchTheme('forest')">🌿 Forest Breath</button>
+  <button class="tab-btn tab-cherry" data-theme="cherry" onclick="switchTheme('cherry')">🌸 Cherry Blossom</button>
+  <button class="tab-btn tab-sunset" data-theme="sunset" onclick="switchTheme('sunset')">🎐 Sunset Warmth</button>
+  <button class="tab-btn tab-cloud" data-theme="cloud" onclick="switchTheme('cloud')">☁️ Cloud Soft</button>
+</div>
+
+<!-- ═══ Main Showcase ═══ -->
+<div class="showcase">
+
+  <!-- ── Translation Panel Demo ── -->
+  <section style="width:100%;">
+    <div class="section-title">✨ Translation Panel</div>
+    <div class="panel-scene">
+      <!-- Selected Text -->
+      <div class="selected-text">
+        The quick brown fox jumps over the lazy dog.
+        <div class="trigger-wrapper">
+          <button class="trigger-btn theme-trigger" id="mainTrigger" onclick="onTriggerClick(this)">
+            <span>🔤</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Popup Panel -->
+      <div id="panelWrapper">
+        <div class="theme-panel theme-default" id="demoPanel">
+          <div class="panel-inner" style="padding:14px;">
+            <!-- Input Area -->
+            <div class="input-area" style="padding:10px 12px; margin-bottom:8px;">
+              <div style="color:inherit; font-size:.88em; line-height:1.6;">The quick brown fox jumps over the lazy dog.</div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px;">
+                <span class="tts-btn" style="font-size:.76em;">🔊</span>
+                <span class="hint" style="font-size:.74em;">↵ Translate · ⇧↵ Newline</span>
+              </div>
+            </div>
+
+            <!-- Language Bar -->
+            <div class="lang-bar" style="padding:6px 10px; margin-bottom:8px; display:flex; align-items:center; gap:8px;">
+              <span style="flex:1;font-size:.8em;">Auto Detect (English)</span>
+              <span class="swap-btn" style="font-size:.78em;">⇄</span>
+              <span style="flex:1;text-align:right;font-size:.8em;">中文（简体）</span>
+            </div>
+
+            <div class="divider-line" style="border:none;border-top:.5px solid;margin:8px 0;"></div>
+
+            <!-- Result Card -->
+            <div class="card" style="padding:10px 12px;">
+              <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+                <span class="chevron" style="font-size:.72em;color:inherit;">▼</span>
+                <span class="provider-name" style="font-size:.78em;font-weight:500;">Apple Translate</span>
+                <span style="flex:1;"></span>
+                <span class="success-icon" style="font-size:.84em;">✓</span>
+              </div>
+              <div class="card-text" style="font-size:.92em;line-height:1.65;">
+                敏捷的棕色狐狸跳过了懒惰的狗。
+              </div>
+              <div style="display:flex;justify-content:flex-end;gap:6px;margin-top:8px;">
+                <span style="font-size:.72em;padding:3px 8px;border-radius:6px;background:rgba(0,0,0,.04);cursor:pointer;" title="Copy">📋 Copy</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Color Palette -->
+    <div class="palette" id="palette"></div>
+  </section>
+
+  <!-- ── All Themes Overview ── -->
+  <section style="width:100%;">
+    <div class="section-title">🎨 All Skins at a Glance</div>
+    <div class="grid" id="overviewGrid"></div>
+  </section>
+
+  <!-- ── Architecture ── -->
+  <section class="arch-section">
+    <div class="section-title" style="padding-left:0;">🏗️ Architecture</div>
+    <p style="color:var(--text-secondary);font-size:.92em;line-height:1.7;margin-bottom:8px;">
+      A single <code style="background:#eee;padding:2px 8px;border-radius:4px;">Theme.swift</code> file defines every visual parameter.
+      All UI components read from <code style="background:#eee;padding:2px 8px;border-radius:4px;">ThemeManager.shared.current</code>.
+      Adding a new skin = adding one static struct definition. Zero changes to business logic.
+    </p>
+
+    <div class="arch-grid">
+      <div class="arch-item" style="border-color:var(--accent-green);">
+        <h4>🎨 Theme.swift</h4>
+        <p>Core definitions: Theme struct with ~40 parameters per skin, ThemeManager singleton, UserDefaults persistence, 5 built-in skins.</p>
+      </div>
+      <div class="arch-item" style="border-color:var(--accent-pink);">
+        <h4>🪟 PopupPanel + PopupView</h4>
+        <p>Background gradient, shadow radius, corner radius — all driven by Theme. Falls back gracefully if no custom theme is set.</p>
+      </div>
+      <div class="arch-item" style="border-color:var(--accent-amber);">
+        <h4>🃏 ProviderResultCard</h4>
+        <p>Card tint, border, text hierarchy (primary/secondary/provider/hint), status indicators (waiting/translating/success/error).</p>
+      </div>
+      <div class="arch-item" style="border-color:var(--accent-blue);">
+        <h4>🔘 TriggerIconController</h4>
+        <p>The floating trigger button drawn via Core Graphics — base color, glow, border, icon color all from Theme's NSColor properties.</p>
+      </div>
+    </div>
+
+    <div class="file-tree"><span class="comment">// Modified file tree (relative to MoePeek source root)</span>
+<span class="dir">Sources/UI/</span>
+├── <span class="dir">Themes/</span>
+│   └── <span class="file">Theme.swift</span>                    <span class="comment">// ← NEW: All skins defined here</span>
+├── <span class="dir">PopupPanel/</span>
+│   ├── <span class="file">PopupPanel.swift</span>               <span class="comment">// cornerRadius from Theme</span>
+│   ├── <span class="file">PopupView.swift</span>                <span class="comment">// background+shadow from Theme</span>
+│   ├── <span class="file">ProviderResultCard.swift</span>       <span class="comment">// card+text colors from Theme</span>
+│   ├── <span class="file">SourceInputView.swift</span>          <span class="comment">// input bg+tts btn from Theme</span>
+│   └── <span class="file">LanguageBarView.swift</span>           <span class="comment">// swap btn+bar bg from Theme</span>
+└── <span class="dir">TriggerIcon/</span>
+    ├── <span class="file">TriggerIconController.swift</span>    <span class="comment">// draw() reads Theme NSColors</span>
+    └── <span class="file">TriggerIconPanel.swift</span>         <span class="comment">// size 36px</span>
+
+<span class="key">UserDefaults key:</span> selectedSkin → default "<span class="string">"forest""</span></div>
+  </section>
+
+  <!-- ═══ CTA ═══ -->
+  <section class="cta-section">
+    <h2>✨ Make MoePeek a little warmer</h2>
+    <p>Clone the repo, open in Xcode, pick your favorite skin in Settings, build & run.<br>No complex setup — just cozy vibes.</p>
+    <div class="cta-btns">
+      <a href="#" class="cta-btn cta-primary" onclick="return false;">🐙 View on GitHub</a>
+      <a href="#" class="cta-btn cta-secondary" onclick="return false;">⭐ Star</a>
+    </div>
+  </section>
+</div>
+
+<script>
+// ═══════════════════════════════════════
+// THEME DATA
+// ═══════════════════════════════════════
+const themes = {
+  default: {
+    name: 'Default', emoji: '📦',
+    desc: 'Original MoePeek appearance',
+    palette: [
+      ['#f0f0f0','bg'],
+      ['rgba(0,0,0,.03)','card'],
+      ['#222','text'],
+      ['#28a745','ok'],
+      ['#e8e8e8','trigger']
+    ],
+    panelBg: '#f0f0f0', radius: 12,
+    inputBg: 'rgba(0,0,0,.03)', cardBg: 'rgba(0,0,0,.03)',
+    textColor: '#222', accent: '#666', okColor: '#28a745',
+    triggerBg: '#e8e8e8', triggerBorder: '#ccc', triggerIcon: '#333'
+  },
+  forest: {
+    name: 'Forest Breath', emoji: '🌿',
+    desc: 'Moss green & cream — like reading under an oak tree',
+    palette: [
+      ['#f2f7ed','panel'],
+      ['#daebe0','input'],
+      ['#33472e','ink'],
+      ['#73a666','moss'],
+      ['#f2f7ed','btn']
+    ],
+    panelBg: '#f2f7ed', radius: 16,
+    inputBg: 'rgba(230,245,220,.55)', cardBg: 'rgba(218,235,210,.45)',
+    textColor: '#33472e', accent: '#739e6b', okColor: '#73a666',
+    triggerBg: '#f2f7ed', triggerBorder: 'rgba(165,204,148,.35)', triggerIcon: '#597a52'
+  },
+  cherry: {
+    name: 'Cherry Blossom', emoji: '🌸',
+    desc: 'Soft pink & cream — like receiving a gentle note',
+    palette: [
+      ['#faf2f6','panel'],
+      ['#faecf3','input'],
+      ['#472e3d','rose ink'],
+      ['#cc7aa3','blush'],
+      ['#f8f0f6','btn']
+    ],
+    panelBg: '#faf2f6', radius: 20,
+    inputBg: 'rgba(250,236,243,.52)', cardBg: 'rgba(248,228,238,.50)',
+    textColor: '#472e3d', accent: '#b3809e', okColor: '#cc7aa3',
+    triggerBg: '#f8f0f6', triggerBorder: 'rgba(212,174,196,.38)', triggerIcon: '#8a577a'
+  },
+  sunset: {
+    name: 'Sunset Warmth', emoji: '🎐',
+    desc: 'Warm amber & ivory — like evening light by the window',
+    palette: [
+      ['#faf2e6','panel'],
+      ['#faf4ea','input'],
+      ['#423326','charcoal'],
+      ['#bf9452','amber'],
+      ['#f8f0e6','btn']
+    ],
+    panelBg: '#faf2e6', radius: 14,
+    inputBg: 'rgba(250,244,234,.52)', cardBg: 'rgba(248,240,228,.48)',
+    textColor: '#423326', accent: '#a88057', okColor: '#bf9452',
+    triggerBg: '#f8f0e6', triggerBorder: 'rgba(204,173,128,.34)', triggerIcon: '#80613d'
+  },
+  cloud: {
+    name: 'Cloud Soft', emoji: '☁️',
+    desc: 'Sky blue & lavender — light as lying on clouds',
+    palette: [
+      ['#f5f5fa','panel'],
+      ['#f4f4fc','input'],
+      ['#383852','indigo'],
+      ['#8085cc','peri'],
+      ['#f5f5fa','btn']
+    ],
+    panelBg: '#f5f5fa', radius: 24,
+    inputBg: 'rgba(244,244,252,.52)', cardBg: 'rgba(242,242,250,.48)',
+    textColor: '#383852', accent: '#858acc', okColor: '#8085cc',
+    triggerBg: '#f5f5fa', triggerBorder: 'rgba(183,183,224,.38)', triggerIcon: '#616199'
+  }
+};
+
+let currentThemeId = 'default';
+
+function switchTheme(id) {
+  currentThemeId = id;
+  const t = themes[id];
+  const panel = document.getElementById('demoPanel');
+  // Update classes
+  panel.className = 'theme-panel theme-' + id;
+
+  // Update tabs
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.theme === id);
+  });
+
+  // Update palette
+  renderPalette(t);
+
+  // Re-animate panel
+  panel.style.animation = 'none';
+  void panel.offsetWidth;
+  panel.style.animation = 'panelIn .4s cubic-bezier(.34,1.56,.64,1) forwards';
+
+  // Re-animate trigger
+  const trig = document.getElementById('mainTrigger');
+  trig.style.animation = 'none';
+  void trig.offsetWidth;
+  trig.style.animation = 'btnPop .35s cubic-bezier(.34,1.56,.64,1) forwards';
+}
+
+function renderPalette(t) {
+  const el = document.getElementById('palette');
+  el.innerHTML = t.palette.map(([c,label]) =>
+    `<div class="swatch" style="background:${c};" data-label="${label}" onclick="
+      navigator.clipboard.writeText('${c}');
+      this.style.transform='scale(1.2)';
+      setTimeout(()=>this.style.transform='',300);
+    " title="Click to copy: ${c}"></div>`
+  ).join('');
+}
+
+function onTriggerClick(el) {
+  el.style.transform = 'scale(.9)';
+  setTimeout(() => {
+    el.innerHTML = '<span style="color:' + themes[currentThemeId].okColor + '">✓</span>';
+    el.style.transform = '';
+    setTimeout(() => {
+      el.innerHTML = '<span>' + (currentThemeId === 'default' ? '🔤' : '🔤') + '</span>';
+      el.style.animation = 'none'; void el.offsetWidth;
+      el.style.animation = 'btnPop .33s cubic-bezier(.34,1.56,.64,1) forwards';
+    }, 550);
+  }, 140);
+}
+
+// Build overview grid
+(function buildGrid() {
+  const grid = document.getElementById('overviewGrid');
+  Object.entries(themes).forEach(([id,t]) => {
+    grid.innerHTML += `
+      <div class="mini-card" onclick="switchTheme('${id}')">
+        <div class="mini-header theme-${id}" style="background:linear-gradient(135deg,${t.panelBg},${t.cardBg || t.inputBg});">
+          <span class="emoji">${t.emoji}</span>
+          <span class="name">${t.name}</span>
+        </div>
+        <div class="mini-body">
+          <div class="mini-panel theme-${id}">
+            <div class="mini-line long" style="background:${t.accent}22;"></div>
+            <div class="mini-line medium" style="background:${t.accent}18;"></div>
+            <div class="mini-line short" style="background:${t.okColor}44;"></div>
+          </div>
+          <p style="margin-top:10px;font-size:.8em;color:var(--text-secondary);line-height:1.5;">${t.desc}</p>
+        </div>
+      </div>`;
+  });
+})();
+
+// Init
+renderPalette(themes.default);
+</script>
+</body>
+</html>

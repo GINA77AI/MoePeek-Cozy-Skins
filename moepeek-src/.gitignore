@@ -1,0 +1,23 @@
+# Tuist managed
+Derived/
+.build/
+
+# Xcode
+*.xcodeproj
+*.xcworkspace
+xcuserdata/
+DerivedData/
+build/
+
+# Signing (local xcconfig with personal identity)
+Configurations/Signing.xcconfig
+
+# macOS
+.DS_Store
+
+# SwiftPM
+.swiftpm/
+Tuist/.build/
+
+# Sparkle appcast (generated locally or by CI)
+appcast.xml
