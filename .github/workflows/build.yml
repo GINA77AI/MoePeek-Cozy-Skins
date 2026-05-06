@@ -78,14 +78,14 @@ jobs:
           if [ -n "$APP_PATH" ] && [ -d "$APP_PATH" ]; then
             echo "Found app at: $APP_PATH"
             cd "$(dirname "$APP_PATH")"
-            zip -r -q ../../../MoePeek-Cozy-Skins.zip "$(basename "$APP_PATH")"
-            echo "✅ Packaged: $(du -h ../../../MoePeek-Cozy-Skins.zip | cut -f1)"
+            zip -r -q "${GITHUB_WORKSPACE}/MoePeek-Cozy-Skins.zip" "$(basename "$APP_PATH")"
+            echo "✅ Packaged: $(du -h ${GITHUB_WORKSPACE}/MoePeek-Cozy-Skins.zip | cut -f1)"
           else
             echo "⚠️ Could not find MoePeek.app, creating debug package instead"
             # Create a fallback with source code for manual build
             cd moepeek-src
-            zip -r -q ../MoePeek-Cozy-Skins-Source.zip Sources/ Package.swift Project.swift Tuist/
-            mv ../MoePeek-Cozy-Skins-Source.zip ../MoePeek-Cozy-Skins.zip
+            zip -r -q "${GITHUB_WORKSPACE}/MoePeek-Cozy-Skins-Source.zip Sources/ Package.swift Project.swift Tuist/
+            mv "${GITHUB_WORKSPACE}/MoePeek-Cozy-Skins-Source.zip" "${GITHUB_WORKSPACE}/MoePeek-Cozy-Skins.zip"
             echo "⚠️ Packaged source as fallback"
           fi
 
@@ -93,7 +93,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: MoePeek-Cozy-Skins
-          path: moepeek-src/MoePeek-Cozy-Skins.zip
+          path: MoePeek-Cozy-Skins.zip
           retention-days: 30
           if-no-files-found: warn
 
