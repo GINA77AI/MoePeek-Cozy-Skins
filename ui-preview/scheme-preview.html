@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌸 治愈系翻译面板 — UI 方案预览</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600&display=swap');
+
+  :root {
+    --page-bg: #faf8f5;
+    --text: #3d3a35;
+    --text-light: #8a857d;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans SC', -apple-system, sans-serif;
+    background: var(--page-bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ===== 页面背景纹理 ===== */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(255,183,197,0.12) 0%, transparent 50%),
+      radial-gradient(circle at 80% 30%, rgba(167,199,231,0.12) 0%, transparent 50%),
+      radial-gradient(circle at 40% 80%, rgba(186,225,180,0.1) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 48px 24px 80px; position: relative; z-index: 1; }
+
+  /* ===== Header ===== */
+  .header { text-align: center; margin-bottom: 56px; }
+  .header-emoji { font-size: 52px; margin-bottom: 12px; animation: floaty 4s ease-in-out infinite; }
+  @keyframes floaty {
+    0%,100% { transform: translateY(0) rotate(-3deg); }
+    50% { transform: translateY(-10px) rotate(3deg); }
+  }
+  .header h1 {
+    font-size: 34px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: -0.5px;
+  }
+  .header p {
+    font-size: 16px;
+    color: var(--text-light);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* ===== 方案网格 ===== */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+  }
+
+  /* ===== 方案卡片 ===== */
+  .scheme {
+    border-radius: 24px;
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .scheme:hover { transform: translateY(-6px) scale(1.01); }
+
+  /* 背景装饰 */
+  .scheme::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  .scheme::after {
+    content: '';
+    position: absolute;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    filter: blur(60px);
+    top: -60px; right: -40px;
+    opacity: 0.25;
+  }
+
+  /* ========== A 春日樱花 ========== */
+  .scheme-a {
+    background: linear-gradient(145deg, #fff9fb, #fff0f4, #fef0f0);
+    border: 1.5px solid rgba(255,182,197,0.3);
+  }
+  .scheme-a::before {
+    background: 
+      radial-gradient(circle at 30% 20%, rgba(255,182,197,0.15), transparent 45%),
+      radial-gradient(circle at 70% 70%, rgba(255,218,220,0.12), transparent 45%);
+  }
+  .scheme-a::after { background: #ffb7c5; }
+
+  /* ========== B 森林呼吸 ========== */
+  .scheme-b {
+    background: linear-gradient(145deg, #f7faf5, #f0f6ed, #eef5eb);
+    border: 1.5px solid rgba(142,189,134,0.3);
+  }
+  .scheme-b::before {
+    background: 
+      radial-gradient(circle at 30% 20%, rgba(142,189,134,0.15), transparent 45%),
+      radial-gradient(circle at 70% 70%, rgba(196,217,175,0.12), transparent 45%);
+  }
+  .scheme-b::after { background: #8ebd86; top: auto; bottom: -60px; left: -40px; right: auto; }
+
+  /* ========== C 日落暖光 ========== */
+  .scheme-c {
+    background: linear-gradient(145deg, #fffcf5, #fff6ec, #fff1e0);
+    border: 1.5px solid rgba(245,176,96,0.3);
+  }
+  .scheme-c::before {
+    background: 
+      radial-gradient(circle at 30% 20%, rgba(245,176,96,0.13), transparent 45%),
+      radial-gradient(circle at 70% 70%, rgba(250,210,160,0.11), transparent 45%);
+  }
+  .scheme-c::after { background: #f5b060; }
+
+  /* ========== D 云朵软绵绵 ========== */
+  .scheme-d {
+    background: linear-gradient(145deg, #f8faff, #f2f5ff, #f0f3fa);
+    border: 1.5px solid rgba(147,167,230,0.3);
+  }
+  .scheme-d::before {
+    background: 
+      radial-gradient(circle at 30% 20%, rgba(147,167,230,0.14), transparent 45%),
+      radial-gradient(circle at 70% 70%, rgba(221,195,240,0.12), transparent 45%);
+  }
+  .scheme-d::after { background: #93a7e6; }
+
+  /* ===== 标签区 ===== */
+  .scheme-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+    position: relative;
+    z-index: 1;
+  }
+  .label-icon {
+    width: 38px; height: 38px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+  .label-name { font-size: 17px; font-weight: 700; }
+  .label-sub { font-size: 12px; color: var(--text-light); font-weight: 400; }
+
+  .scheme-a .label-icon { background: rgba(255,182,197,0.25); }
+  .scheme-b .label-icon { background: rgba(142,189,134,0.2); }
+  .scheme-c .label-icon { background: rgba(245,176,96,0.2); }
+  .scheme-d .label-icon { background: rgba(147,167,230,0.2); }
+
+  /* ===== 翻译面板预览（核心） ===== */
+  .panel-preview {
+    border-radius: 18px;
+    padding: 22px 24px;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+    transition: all 0.3s;
+  }
+  
+  .panel-preview:hover {
+    box-shadow: 0 16px 48px rgba(0,0,0,0.1);
+  }
+
+  /* --- 面板 A 样式 --- */
+  .panel-a {
+    background: linear-gradient(135deg, rgba(255,255,255,0.92), rgba(255,245,248,0.85));
+    backdrop-filter: blur(20px) saturate(1.4);
+    border: 1.5px solid rgba(255,182,197,0.25);
+    border-radius: 22px;
+  }
+  .panel-a .source-text {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 14px;
+    color: #c47a88;
+    margin-bottom: 10px;
+    opacity: 0.75;
+    line-height: 1.5;
+  }
+  .panel-a .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,182,197,0.35), transparent);
+    margin: 12px 0;
+  }
+  .panel-a .translated {
+    font-size: 17px;
+    font-weight: 500;
+    color: #5a3d42;
+    line-height: 1.65;
+  }
+  .panel-a .panel-footer {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 14px; padding-top: 12px;
+    border-top: 1px solid rgba(255,182,197,0.15);
+  }
+  .panel-a .engine-tag {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; color: #d48a98;
+    background: rgba(255,182,197,0.12);
+    padding: 3px 10px; border-radius: 99px;
+  }
+  .panel-a .action-btns { display: flex; gap: 6px; }
+  .panel-a .action-btn {
+    width: 28px; height: 28px; border-radius: 9px;
+    border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    background: rgba(255,182,197,0.15);
+    color: #c47a88;
+    transition: all 0.2s;
+  }
+  .panel-a .action-btn:hover { background: rgba(255,182,197,0.3); transform: scale(1.08); }
+
+  /* --- 面板 B 样式 --- */
+  .panel-b {
+    background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(246,250,243,0.82));
+    backdrop-filter: blur(20px) saturate(1.4);
+    border: 1.5px solid rgba(142,189,134,0.22);
+    border-radius: 16px;
+  }
+  .panel-b .source-text {
+    font-size: 13px;
+    color: #6b8e61;
+    margin-bottom: 8px;
+    opacity: 0.7;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+  }
+  .panel-b .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(142,189,134,0.3), transparent);
+    margin: 10px 0;
+  }
+  .panel-b .translated {
+    font-size: 16px;
+    font-weight: 500;
+    color: #2d4428;
+    line-height: 1.6;
+  }
+  .panel-b .panel-footer {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 12px; padding-top: 10px;
+    border-top: 1px solid rgba(142,189,134,0.12);
+  }
+  .panel-b .engine-tag {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; color: #5a7d51;
+    background: rgba(142,189,134,0.1);
+    padding: 3px 10px; border-radius: 99px;
+  }
+  .panel-b .action-btns { display: flex; gap: 6px; }
+  .panel-b .action-btn {
+    width: 26px; height: 26px; border-radius: 8px;
+    border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    background: rgba(142,189,134,0.12);
+    color: #5a7d51;
+    transition: all 0.2s;
+  }
+  .panel-b .action-btn:hover { background: rgba(142,189,134,0.25); }
+
+  /* --- 面板 C 样式 --- */
+  .panel-c {
+    background: linear-gradient(135deg, rgba(255,255,255,0.91), rgba(255,248,240,0.84));
+    backdrop-filter: blur(20px) saturate(1.4);
+    border: 1.5px solid rgba(245,176,96,0.22);
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(245,176,96,0.08);
+  }
+  .panel-c .source-text {
+    font-family: 'Noto Serif SC', Georgia, serif;
+    font-size: 14px;
+    color: #b07840;
+    margin-bottom: 10px;
+    opacity: 0.72;
+    font-style: italic;
+    line-height: 1.5;
+  }
+  .panel-c .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(245,176,96,0.3), transparent);
+    margin: 12px 0;
+  }
+  .panel-c .translated {
+    font-size: 17px;
+    font-weight: 500;
+    color: #4a3020;
+    line-height: 1.68;
+  }
+  .panel-c .panel-footer {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 14px; padding-top: 12px;
+    border-top: 1px dashed rgba(245,176,96,0.18);
+  }
+  .panel-c .engine-tag {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; color: #a06830;
+    background: rgba(245,176,96,0.1);
+    padding: 3px 10px; border-radius: 99px;
+    font-family: 'Noto Serif SC', serif;
+  }
+  .panel-c .action-btns { display: flex; gap: 6px; }
+  .panel-c .action-btn {
+    width: 28px; height: 28px; border-radius: 9px;
+    border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    background: rgba(245,176,96,0.12);
+    color: #a06830;
+    transition: all 0.2s;
+  }
+  .panel-c .action-btn:hover { background: rgba(245,176,96,0.25); }
+
+  /* --- 面板 D 样式 --- */
+  .panel-d {
+    background: linear-gradient(135deg, rgba(255,255,255,0.78), rgba(245,247,255,0.72));
+    backdrop-filter: blur(24px) saturate(1.6);
+    border: 1.5px solid rgba(147,167,230,0.18);
+    border-radius: 24px;
+    box-shadow: 
+      0 8px 32px rgba(147,167,230,0.1),
+      inset 0 1px 0 rgba(255,255,255,0.6);
+  }
+  .panel-d .source-text {
+    font-size: 13px;
+    color: #7a8ab8;
+    margin-bottom: 8px;
+    opacity: 0.7;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+  }
+  .panel-d .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(147,167,230,0.25), transparent);
+    margin: 10px 0;
+  }
+  .panel-d .translated {
+    font-size: 16px;
+    font-weight: 300;
+    color: #303d5c;
+    line-height: 1.7;
+    letter-spacing: 0.3px;
+  }
+  .panel-d .panel-footer {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 14px; padding-top: 12px;
+    border-top: 1px solid rgba(147,167,230,0.1);
+  }
+  .panel-d .engine-tag {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; color: #7a8ab8;
+    background: rgba(147,167,230,0.08);
+    padding: 4px 12px; border-radius: 99px;
+    font-weight: 300;
+  }
+  .panel-d .action-btns { display: flex; gap: 8px; }
+  .panel-d .action-btn {
+    width: 27px; height: 27px; border-radius: 10px;
+    border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    background: rgba(147,167,230,0.1);
+    color: #7a8ab8;
+    transition: all 0.25s;
+  }
+  .panel-d .action-btn:hover { 
+    background: rgba(147,167,230,0.2); 
+    transform: translateY(-1px);
+  }
+
+  /* ===== 配色说明 ===== */
+  .color-palette {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+    position: relative;
+    z-index: 1;
+  }
+  .color-dot {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.7);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: transform 0.2s;
+  }
+  .color-dot:hover { transform: scale(1.2); }
+
+  /* ===== 氛围描述 ===== */
+  .vibe-desc {
+    font-size: 13px;
+    color: var(--text-light);
+    margin-top: 14px;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ===== 底部选择区 ===== */
+  .pick-section {
+    text-align: center;
+    margin-top: 56px;
+    padding: 36px;
+    background: linear-gradient(135deg, rgba(108,92,231,0.05), rgba(162,155,254,0.04));
+    border: 1px solid rgba(108,92,231,0.1);
+    border-radius: 24px;
+  }
+  .pick-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .pick-hint {
+    font-size: 14px;
+    color: var(--text-light);
+  }
+
+  /* ===== 动画 ===== */
+  @keyframes gentleIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .scheme {
+    animation: gentleIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  }
+  .scheme:nth-child(1) { animation-delay: 0.05s; }
+  .scheme:nth-child(2) { animation-delay: 0.15s; }
+  .scheme:nth-child(3) { animation-delay: 0.25s; }
+  .scheme:nth-child(4) { animation-delay: 0.35s; }
+
+  @keyframes sparkle {
+    0%,100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.15); }
+  }
+
+  /* ===== 响应式 ===== */
+  @media (max-width: 800px) {
+    .grid { grid-template-columns: 1fr; }
+    .header h1 { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-emoji">🌿✨🌸</div>
+    <h1>治愈系翻译面板 · UI 方案预览</h1>
+    <p>四种不同氛围的翻译弹窗设计，看看哪个最戳中你的心～<br>每个方案中的白色卡片就是实际使用时的翻译效果预览</p>
+  </header>
+
+  <!-- Grid -->
+  <div class="grid">
+
+    <!-- ========== A 春日樱花 ========== -->
+    <div class="scheme scheme-a">
+      <div class="scheme-label">
+        <div class="label-icon">🌸</div>
+        <div><div class="label-name">A. 春日樱花</div><div class="label-sub">Sakura Spring</div></div>
+      </div>
+
+      <div class="panel-preview panel-a">
+        <div class="source-text">agents/MCP/hooks</div>
+        <div class="divider"></div>
+        <div class="translated">代理 / MCP / 挂钩</div>
+        <div class="panel-footer">
+          <span class="engine-tag">🍎 Apple Translate</span>
+          <div class="action-btns">
+            <button class="action-btn" title="朗读">🔊</button>
+            <button class="action-btn" title="复制">📋</button>
+            <button class="action-btn" title="翻转">↔️</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="color-palette">
+        <div class="color-dot" style="background:#FFB7C5;" title="#FFB7C5"></div>
+        <div class="color-dot" style="background:#FFF0F4;" title="#FFF0F4"></div>
+        <div class="color-dot" style="background:#FFE4E8;" title="#FFE4E8"></div>
+        <div class="color-dot" style="background:#FCE4EC;" title="#FCE4EC"></div>
+        <div class="color-dot" style="background:#5A3D42;" title="#5A3D42 (文字色)"></div>
+      </div>
+      
+      <p class="vibe-desc">💬 温柔柔软的粉色系，像春天微风拂过的花瓣。<br>大圆角 + 衬线字体 = 像手写的便签贴。</p>
+    </div>
+
+    <!-- ========== B 森林呼吸 ========== -->
+    <div class="scheme scheme-b">
+      <div class="scheme-label">
+        <div class="label-icon">🌿</div>
+        <div><div class="label-name">B. 森林呼吸</div><div class="label-sub">Forest Breath</div></div>
+      </div>
+
+      <div class="panel-preview panel-b">
+        <div class="source-text">agents/MCP/hooks</div>
+        <div class="divider"></div>
+        <div class="translated">代理 / MCP / 挂钩</div>
+        <div class="panel-footer">
+          <span class="engine-tag">🍎 Apple Translate</span>
+          <div class="action-btns">
+            <button class="action-btn" title="朗读">🔊</button>
+            <button class="action-btn" title="复制">📋</button>
+            <button class="action-btn" title="翻转">↔️</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="color-palette">
+        <div class="color-dot" style="background:#8EBD86;" title="#8EBD86"></div>
+        <div class="color-dot" style="background:#F0F6ED;" title="#F0F6ED"></div>
+        <div class="color-dot" style="background:#E8F2E3;" title="#E8F2E3"></div>
+        <div class="color-dot" style="background:#D4E8CC;" title="#D4E8CC"></div>
+        <div class="color-dot" style="background:#2D4428;" title="#2D4428 (文字色)"></div>
+      </div>
+      
+      <p class="vibe-desc">💬 清新的苔藓绿，安静自然不抢眼。<br>中等圆角 + 干净字体 = 在森林里读书的感觉。</p>
+    </div>
+
+    <!-- ========== C 日落暖光 ========== -->
+    <div class="scheme scheme-c">
+      <div class="scheme-label">
+        <div class="label-icon">🎐</div>
+        <div><div class="label-name">C. 日落暖光</div><div class="label-sub">Sunset Glow</div></div>
+      </div>
+
+      <div class="panel-preview panel-c">
+        <div class="source-text">agents/MCP/hooks</div>
+        <div class="divider"></div>
+        <div class="translated">代理 / MCP / 挂钩</div>
+        <div class="panel-footer">
+          <span class="engine-tag">🍎 Apple Translate</span>
+          <div class="action-btns">
+            <button class="action-btn" title="朗读">🔊</button>
+            <button class="action-btn" title="复制">📋</button>
+            <button class="action-btn" title="翻转">↔️</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="color-palette">
+        <div class="color-dot" style="background:#F5B060;" title="#F5B060"></div>
+        <div class="color-dot" style="background:#FFF6EC;" title="#FFF6EC"></div>
+        <div class="color-dot" style="background:#FFECD2;" title="#FFECD2"></div>
+        <div class="color-dot" style="background:#FAD2A0;" title="#FAD2A0"></div>
+        <div class="color-dot" style="background:#4A3020;" title="#4A3020 (文字色)"></div>
+      </div>
+      
+      <p class="vibe-desc">💬 暖橘色调，像傍晚窗边的台灯光晕。<br>虚线分隔 + 斜体原文 = 温暖安心的感觉。</p>
+    </div>
+
+    <!-- ========== D 云朵软绵绵 ========== -->
+    <div class="scheme scheme-d">
+      <div class="scheme-label">
+        <div class="label-icon">☁️</div>
+        <div><div class="label-name">D. 云朵软绵绵</div><div class="label-sub">Soft Clouds</div></div>
+      </div>
+
+      <div class="panel-preview panel-d">
+        <div class="source-text">agents/MCP/hooks</div>
+        <div class="divider"></div>
+        <div class="translated">代理 / MCP / 挂钩</div>
+        <div class="panel-footer">
+          <span class="engine-tag">🍎 Apple Translate</span>
+          <div class="action-btns">
+            <button class="action-btn" title="朗读">🔊</button>
+            <button class="action-btn" title="复制">📋</button>
+            <button class="action-btn" title="翻转">↔️</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="color-palette">
+        <div class="color-dot" style="background:#93A7E6;" title="#93A7E6"></div>
+        <div class="color-dot" style="background:#F2F5FF;" title="#F2F5FF"></div>
+        <div class="color-dot" style="background:#DDC3F0;" title="#DDC3F0"></div>
+        <div class="color-dot" style="background:#E0E6FA;" title="#E0E6FA"></div>
+        <div class="color-dot" style="background:#303D5C;" title="#303D5C (文字色)"></div>
+      </div>
+      
+      <p class="vibe-desc">💬 天蓝+淡紫渐变，梦幻轻盈像躺在云上。<br>超大圆角 + 细字体 + 毛玻璃 = 最软糯的感觉。</p>
+    </div>
+
+  </div>
+
+  <!-- Pick Section -->
+  <section class="pick-section">
+    <div class="pick-title">💭 选一个？还是混搭？</div>
+    <p class="pick-hint">告诉我你喜欢哪个字母（A/B/C/D），或者 "我要 A 的配色 + D 的圆角"<br>也可以说 "都不够好"，我们继续调 😊</p>
+  </section>
+
+</div>
+
+<script>
+// 点击颜色点复制色值
+document.querySelectorAll('.color-dot').forEach(dot => {
+  dot.addEventListener('click', () => {
+    const color = dot.style.background;
+    navigator.clipboard.writeText(color.match(/#[\da-f]{3,6}/i)[0]);
+    dot.style.transform = 'scale(1.4)';
+    setTimeout(() => dot.style.transform = '', 300);
+  });
+});
+
+// 面板点击微动效
+document.querySelectorAll('.panel-preview').forEach(panel => {
+  panel.addEventListener('click', function(e) {
+    if (e.target.closest('.action-btn')) return;
+    this.style.transform = 'scale(0.97)';
+    setTimeout(() => this.style.transform = '', 150);
+  });
+});
+</script>
+
+</body>
+</html>
