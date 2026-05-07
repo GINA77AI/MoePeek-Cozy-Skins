@@ -43,9 +43,13 @@ jobs:
             echo "::error::MoePeek.app not found"
             exit 1
           fi
-          # Create zip at workspace root
-          ditto -ck --keepParent "$APP" MoePeek-Cozy-Skins.zip
-          ls -lh MoePeek-Cozy-Skins.zip
+          # Verify it has executable
+          ls -lh "$APP/Contents/MacOS/" || echo "WARNING: No MacOS dir"
+          du -sh "$APP"
+          # Create zip using cd + zip to capture everything including binaries
+          cd "$(dirname "$APP")"
+          zip -r "${GITHUB_WORKSPACE}/MoePeek-Cozy-Skins.zip" "$(basename "$APP")"
+          ls -lh "${GITHUB_WORKSPACE}/MoePeek-Cozy-Skins.zip"
 
       - uses: actions/upload-artifact@v4
         with:
