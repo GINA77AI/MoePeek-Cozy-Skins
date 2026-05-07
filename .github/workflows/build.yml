@@ -25,14 +25,25 @@ jobs:
       - name: Build
         working-directory: moepeek-src
         run: |
+          set -e  # Fail immediately if build fails
           export PATH="$HOME/.tuistenv/bin:$PATH"
+          set +e
           xcodebuild \
             -workspace MoePeek.xcworkspace \
             -scheme MoePeek \
             -configuration Release \
             -derivedDataPath build \
             CODE_SIGNING_ALLOWED=NO \
-            | xcpretty || true
+            | xcpretty; BUILD_EXIT=${PIPESTATUS[0]}
+          set -e
+          if [ $BUILD_EXIT -ne 0 ]; then echo "❌ BUILD FAILED (exit $BUILD_EXIT)"; exit 1; fi
+          # Verify the binary exists
+          APP="build/Build/Products/Release/MoePeek.app/Contents/MacOS/MoePeek"
+          if [ ! -f "$APP" ] || [ ! -x "$APP" ]; then
+            echo "❌ Build output missing or not executable: $APP"
+            exit 1
+          fi
+          echo "✅ Build succeeded"
 
       - name: Package & Upload
         run: |

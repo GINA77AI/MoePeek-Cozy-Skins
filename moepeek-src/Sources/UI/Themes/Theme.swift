@@ -104,7 +104,7 @@ final class ThemeManager: ObservableObject {
     }
 
     /// All available skins, ordered for presentation.
-    static var allSkins: [Theme] [
+    static var allSkins: [Theme] = [
         .defaultMoePeek,
         .forestBreath,
         .cherryBlossom,
