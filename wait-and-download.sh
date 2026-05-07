@@ -4,7 +4,7 @@
 # ============================================================
 
 REPO="GINA77AI/MoePeek-Cozy-Skins"
-RUN_ID="25473814277"
+RUN_ID="25473944347"
 OUTPUT_DIR="$HOME/Desktop"
 
 echo "🔄 正在监控 GitHub Actions 编译状态..."
