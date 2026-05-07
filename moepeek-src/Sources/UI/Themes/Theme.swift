@@ -232,13 +232,13 @@ extension Theme {
         inputAreaBackground: Color(red: 0.96, green: 0.98, blue: 0.94).opacity(0.60),
 
         // Trigger
-        triggerBaseColor: NSColor(red: 0.95, green: 0.97, blue: 0.92),
-        triggerBorderColor: NSColor(red: 0.65, green: 0.80, blue: 0.58),
+        triggerBaseColor: NSColor(red: 0.95, green: 0.97, blue: 0.92, alpha: 1.0),
+        triggerBorderColor: NSColor(red: 0.65, green: 0.80, blue: 0.58, alpha: 1.0),
         triggerBorderOpacity: 0.35,
-        triggerGlowColor: NSColor(red: 0.55, green: 0.72, blue: 0.50),
+        triggerGlowColor: NSColor(red: 0.55, green: 0.72, blue: 0.50, alpha: 1.0),
         triggerGlowOpacity: 0.25,
         triggerGlowBlur: 6,
-        triggerIconColor: NSColor(red: 0.35, green: 0.52, blue: 0.32),
+        triggerIconColor: NSColor(red: 0.35, green: 0.52, blue: 0.32, alpha: 1.0),
         triggerInnerGradientTopAlpha: 0.45,
 
         // Divider
@@ -292,13 +292,13 @@ extension Theme {
         inputAreaBackground: Color(red: 0.98, green: 0.96, blue: 0.97).opacity(0.55),
 
         // Trigger
-        triggerBaseColor: NSColor(red: 0.97, green: 0.94, blue: 0.96),
-        triggerBorderColor: NSColor(red: 0.82, green: 0.68, blue: 0.76),
+        triggerBaseColor: NSColor(red: 0.97, green: 0.94, blue: 0.96, alpha: 1.0),
+        triggerBorderColor: NSColor(red: 0.82, green: 0.68, blue: 0.76, alpha: 1.0),
         triggerBorderOpacity: 0.38,
-        triggerGlowColor: NSColor(red: 0.85, green: 0.65, blue: 0.78),
+        triggerGlowColor: NSColor(red: 0.85, green: 0.65, blue: 0.78, alpha: 1.0),
         triggerGlowOpacity: 0.22,
         triggerGlowBlur: 7,
-        triggerIconColor: NSColor(red: 0.54, green: 0.34, blue: 0.48),
+        triggerIconColor: NSColor(red: 0.54, green: 0.34, blue: 0.48, alpha: 1.0),
         triggerInnerGradientTopAlpha: 0.50,
 
         // Divider
@@ -352,13 +352,13 @@ extension Theme {
         inputAreaBackground: Color(red: 0.98, green: 0.96, blue: 0.92).opacity(0.55),
 
         // Trigger
-        triggerBaseColor: NSColor(red: 0.97, green: 0.94, blue: 0.90),
-        triggerBorderColor: NSColor(red: 0.80, green: 0.68, blue: 0.50),
+        triggerBaseColor: NSColor(red: 0.97, green: 0.94, blue: 0.90, alpha: 1.0),
+        triggerBorderColor: NSColor(red: 0.80, green: 0.68, blue: 0.50, alpha: 1.0),
         triggerBorderOpacity: 0.34,
-        triggerGlowColor: NSColor(red: 0.82, green: 0.66, blue: 0.40),
+        triggerGlowColor: NSColor(red: 0.82, green: 0.66, blue: 0.40, alpha: 1.0),
         triggerGlowOpacity: 0.23,
         triggerGlowBlur: 6,
-        triggerIconColor: NSColor(red: 0.50, green: 0.38, blue: 0.24),
+        triggerIconColor: NSColor(red: 0.50, green: 0.38, blue: 0.24, alpha: 1.0),
         triggerInnerGradientTopAlpha: 0.42,
 
         // Divider
@@ -412,13 +412,13 @@ extension Theme {
         inputAreaBackground: Color(red: 0.97, green: 0.97, blue: 0.99).opacity(0.55),
 
         // Trigger
-        triggerBaseColor: NSColor(red: 0.96, green: 0.96, blue: 0.99),
-        triggerBorderColor: NSColor(red: 0.72, green: 0.72, blue: 0.88),
+        triggerBaseColor: NSColor(red: 0.96, green: 0.96, blue: 0.99, alpha: 1.0),
+        triggerBorderColor: NSColor(red: 0.72, green: 0.72, blue: 0.88, alpha: 1.0),
         triggerBorderOpacity: 0.38,
-        triggerGlowColor: NSColor(red: 0.65, green: 0.65, blue: 0.88),
+        triggerGlowColor: NSColor(red: 0.65, green: 0.65, blue: 0.88, alpha: 1.0),
         triggerGlowOpacity: 0.24,
         triggerGlowBlur: 8,
-        triggerIconColor: NSColor(red: 0.38, green: 0.38, blue: 0.60),
+        triggerIconColor: NSColor(red: 0.38, green: 0.38, blue: 0.60, alpha: 1.0),
         triggerInnerGradientTopAlpha: 0.50,
 
         // Divider
